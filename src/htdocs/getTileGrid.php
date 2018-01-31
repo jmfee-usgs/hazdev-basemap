@@ -58,12 +58,12 @@ $db = new PDO('sqlite:' . $db_file);
 // use .jsonp file as a proxy to .mbtiles because php's filemtime fails for
 // .mbtiles (I think b/c it's > 2 GB)
 $mod = filemtime($layer_prefix . '.jsonp');
-$expires = date('D, d M Y h:i:s T', strtotime('+1 month'));
+$expires = date('D, d M Y h:i:s T', time() + $CACHE_MAXAGE);
 
 
 // Set content type headers regardless of whether there is data or not.
 header('Content-Type: text/javascript');
-header('Cache-Control: public');
+header('Cache-Control: public, max-age=' . $CACHE_MAXAGE);
 header("Last-Modified: $mod");
 header("Expires: $expires");
 

@@ -114,12 +114,12 @@ if ($imageFile) {
 
 
 $last_mod	= date('D, d M Y h:i:s T', $last_mod);
-$expires = date('D, d M Y h:i:s T', strtotime('+1 month'));
+$expires = date('D, d M Y h:i:s T', time() + $CACHE_MAXAGE);
 //$expires = date('D, d M Y h:i:s T', strtotime('now'));
 
 header('Content-Transfer-Encoding: binary');
 header("Content-Type: image/$ext");
-header('Cache-Control: public');
+header('Cache-Control: public, max-age=' . $CACHE_MAXAGE);
 header("Content-Length: $imageSize");
 header("Expires: $expires");
 header("Last-Modified: $last_mod");
